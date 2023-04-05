@@ -6,7 +6,7 @@ import { useProviderValue } from './ProductContext';
 const About = () => {
   const {name}=useProviderValue();
   const data={
-    name:"Thapa Ecommerce"
+    name:"Adithya Ecommerce"
   };
   return (
     <Wrapper>
