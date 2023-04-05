@@ -1,7 +1,7 @@
 import React from 'react'
 import HeroSection from './components/HeroSection';
 import styled from 'styled-components';
-import { useProviderValue } from './ProductContext';
+import { useProviderValue } from './context/ProductContext';
 
 const About = () => {
   const {name}=useProviderValue();
