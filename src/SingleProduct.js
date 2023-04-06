@@ -1,7 +1,103 @@
 import styled from "styled-components";
+import { useProviderValue } from "./context/ProductContext";
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import PageNavigation from "./components/PageNavigation";
+import { Container } from "./styles/Container";
+import MyImage from "./components/MyImage";
+import FormatPrice from "./Helper/FormatPrice";
+import { MdSecurity } from "react-icons/md";
+import { TbTruckDelivery, TbReplace } from "react-icons/tb"
+
+const API="https://api.pujakaitem.com/api/products";
+
 
 const SingleProduct= () => {
-  return <Wrapper></Wrapper>
+
+  const {is_SingleLoading,singleProduct,getSingleProduct}=useProviderValue();
+  console.log(is_SingleLoading,singleProduct);
+
+  const {id}=useParams();
+
+
+
+  useEffect(()=>{
+    getSingleProduct(`${API}?id=${id}`);
+  },[]);
+  
+  const {
+    name,company,price,
+    description,category,stock,
+    stars,reviews,image}=singleProduct;
+
+    if(is_SingleLoading){
+      return <div className="page-loading">.....Loading</div>
+    }
+
+  return <Wrapper>
+    <PageNavigation title={name}/>
+    <Container className="container">
+      <div className="grid grid-two-column">
+      {/* Image data */}
+        <div className="product-images">
+          <MyImage img={image} />
+        </div>
+        {/* product data */}
+        <div className="product-data">
+          <h2>{name}</h2>
+          <p>{stars}</p>
+          <p>{reviews} reviews</p>
+          <div style={{display:"flex"}}>
+          <p className="product-data-price ">
+            MRP:
+          </p>
+          <p className="product-data-price add-margin">
+            <span><del><FormatPrice price={price/100+2500}/></del></span>
+          </p>
+          </div>
+          <div style={{display:"flex"}}>
+          <p className="product-data-price product-data-real-price">
+            Deal of the Day: 
+          </p>
+          <p className="product-data-price product-data-real-price add-margin">
+             <FormatPrice price={price/100}/> 
+          </p>
+          </div>
+          <p>{description}</p>
+          <div className="product-data-warranty">
+          <div className="product-warranty-data">
+                <TbTruckDelivery className="warranty-icon" />
+                <p>Free Delivery</p>
+              </div>
+
+              <div className="product-warranty-data">
+                <TbReplace className="warranty-icon" />
+                <p>30 Days Replacement</p>
+              </div>
+
+              <div className="product-warranty-data">
+                <TbTruckDelivery className="warranty-icon" />
+                <p>Fast Delivery</p>
+              </div>
+
+              <div className="product-warranty-data">
+                <MdSecurity className="warranty-icon" />
+                <p>2 Year Warranty </p>
+              </div>
+          </div>
+          <div className="product-data-info">
+            <p>Availaible:
+            <span>
+              {stock>0?"In Stock":"Not Availaible"}
+            </span></p>
+              <p>
+                Brand :<span> {company} </span>
+              </p>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </Wrapper>
   ;
 }
 const Wrapper = styled.section`
@@ -46,6 +142,9 @@ const Wrapper = styled.section`
     .product-data-real-price {
       color: ${({ theme }) => theme.colors.btn};
     }
+    .add-margin{
+      margin-left: 5px;
+    }
     .product-data-info {
       display: flex;
       flex-direction: column;
@@ -67,6 +166,7 @@ const Wrapper = styled.section`
   }
 
   .product-images {
+    padding-top:2rem;
     display: flex;
     justify-content: center;
     align-items: center;
