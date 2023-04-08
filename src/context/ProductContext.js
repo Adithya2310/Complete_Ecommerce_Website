@@ -53,6 +53,7 @@ const AppProvider=({children})=>{
     );
 }
 
+// a hook to get the value passed to the AppContext
 const useProviderValue=()=>{
     return useContext(AppContext);
 };

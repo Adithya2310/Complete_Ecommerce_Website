@@ -7,7 +7,9 @@ import { Container } from "./styles/Container";
 import MyImage from "./components/MyImage";
 import FormatPrice from "./Helper/FormatPrice";
 import { MdSecurity } from "react-icons/md";
-import { TbTruckDelivery, TbReplace } from "react-icons/tb"
+import { TbTruckDelivery, TbReplace } from "react-icons/tb";
+import Star from "./components/Star";
+import AddtoCart from "./components/AddtoCart";
 
 const API="https://api.pujakaitem.com/api/products";
 
@@ -27,7 +29,7 @@ const SingleProduct= () => {
   
   const {
     name,company,price,
-    description,category,stock,
+    description,stock,
     stars,reviews,image}=singleProduct;
 
     if(is_SingleLoading){
@@ -45,8 +47,9 @@ const SingleProduct= () => {
         {/* product data */}
         <div className="product-data">
           <h2>{name}</h2>
-          <p>{stars}</p>
-          <p>{reviews} reviews</p>
+          <Star stars={stars} reviews={reviews}/>
+          {/* <p>{stars}</p>
+          <p>{reviews} reviews</p> */}
           <div style={{display:"flex"}}>
           <p className="product-data-price ">
             MRP:
@@ -88,12 +91,13 @@ const SingleProduct= () => {
           <div className="product-data-info">
             <p>Availaible:
             <span>
-              {stock>0?"In Stock":"Not Availaible"}
+              {stock>0?" In Stock":" Not Availaible"}
             </span></p>
               <p>
                 Brand :<span> {company} </span>
               </p>
           </div>
+          {stock>0&&<AddtoCart product={singleProduct} />}
         </div>
       </div>
     </Container>
