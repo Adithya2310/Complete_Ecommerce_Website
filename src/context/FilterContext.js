@@ -8,7 +8,10 @@ const initialState={
     filtered_products :[],
     all_products :[],
     gridView: true,
-    sortingOrder:"lowest"
+    sortingOrder:"lowest",
+    filter:{
+        text:""
+    }
 }
 
 
@@ -33,8 +36,13 @@ const FilterProvider=({ children })=>{
         dispatch({type:"SET_LIST_VIEW"});
     }
 
-    const sortingValue=()=>{
-        dispatch({type:"SET_SORTING_ORDER"});
+    const sortingValue=(sortValue)=>{
+        dispatch({type:"SET_SORTING_ORDER",payload:sortValue});
+    }
+
+    const filterValue=(event)=>{
+        const {value,name}=event.target;
+        dispatch({type:"FILTER",payload:{name,value}})
     }
 
     // to get the sorting order
@@ -47,8 +55,15 @@ const FilterProvider=({ children })=>{
         dispatch({type:"SORT"})
     },[state.sortingOrder])
 
+    useEffect(()=>{
+        dispatch({type:"FILTER_SECTION"});
+    },[state.filter]);
 
-    return <FilterContext.Provider value={{...state,setGridView,setListView,sortingValue}}>
+    useEffect(()=>{
+
+    },[state.filter]);
+
+    return <FilterContext.Provider value={{...state,setGridView,setListView,sortingValue,filterValue}}>
         { children }
     </FilterContext.Provider>
 }

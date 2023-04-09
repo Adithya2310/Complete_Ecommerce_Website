@@ -32,20 +32,20 @@ const Sort = () => {
         {/* 3rd column for sorting the elemtent */}
         <div className="sort-selection">
             <form action="#">
-                <label htmlFor="sort" ></label>
+              <label htmlFor="sort"></label>
                     <select 
                     className="sort-selection--style" 
                     name="sort" 
                     id="sort"
-                    onChange={sortingValue}
+                    onChange={(event)=>{sortingValue(event.target.value)}}
                     >
-                        <option value="lowest">Price(Lowest)</option>
+                        <option value="lowest" className='sort-select--option'>Price(Lowest)</option>
                         <option disabled></option>
-                        <option value="highest">Price(Highest)</option>
+                        <option value="highest" className='sort-select--option'>Price(Highest)</option>
                         <option disabled></option>
-                        <option value="ascending">A-Z</option>
+                        <option value="ascending" className='sort-select--option'>A-Z</option>
                         <option disabled></option>
-                        <option value="descending">Z-A</option>
+                        <option value="descending" className='sort-select--option'>Z-A</option>
                         <option disabled></option>
                     </select>
             </form>
