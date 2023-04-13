@@ -1,6 +1,6 @@
-import React from 'react'
 
 const FormatPrice = ({price}) => {
+
   return (
     <div>{price.toLocaleString('en-IN', {
         style: 'currency',

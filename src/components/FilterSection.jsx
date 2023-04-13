@@ -1,17 +1,126 @@
 import React from 'react'
 import { useFilterContext } from '../context/FilterContext'
 import styled from 'styled-components';
+import {FaCheck} from "react-icons/fa";
+import FormatPrice from '../Helper/FormatPrice';
+import {Button} from "../styles/Button"
 
 
 const FilterSection = () => {
-  const {filter:{text},filterValue}=useFilterContext();
+  const {filter:{text,colors:color,category:Cat,price,minPrice,maxPrice},filterValue,all_products,clearFilter}=useFilterContext();
+  console.log(all_products);
+
+  // to function to fetch all the categories in a specific label
+  const getValues=(products,property)=>{
+    let productTypes=products.map((curElem)=>{
+      return curElem[property]
+    });
+    if(property==="colors"){
+      productTypes=productTypes.flat();
+    }
+    return ["All",...new Set(productTypes)];
+  }
+
+  // to get the categories
+  const category=getValues(all_products,"category");
+  // to get the company
+  const company=getValues(all_products,"company");
+  // to get the colors
+  const colors=getValues(all_products,"colors");
+  console.log("now",colors);
+
   console.log("search text in filterContext",text);
   return (
     <Wrapper>
       <div className="filter-search">
         <form action="" onSubmit={(e)=>e.preventdefault}>
-          <input type="text" name="text" placeholder="Search" value={text} onChange={filterValue} />
+          <input type="text" name="text" placeholder="SEARCH" value={text} onChange={filterValue} />
         </form>
+      </div>
+      <div className="filter-category">
+        <h3>Category</h3>
+        <div>
+        {category.map((curCategory,index)=>{
+            return <button
+            key={index}
+            className={(curCategory!==Cat)?'':'active'}
+            type="button"
+            name="category"
+            value={curCategory}
+            onClick={filterValue}
+            >
+            {curCategory}
+            </button>
+            
+        })}
+        </div>
+      </div>
+      <div className="filter-company">
+        <h3>
+          Company
+        </h3>
+        <form action="#">
+          <select name="company" id="company" className='filter-company--select' onClick={filterValue}>
+            {
+              company.map((curCompany,index)=>{
+                return <option value={curCompany} key={index}>{curCompany}</option> 
+              })
+            }
+          </select>
+        </form>
+      </div>
+      <div className="filter-colors color">
+        <h3>Color</h3>
+        <div className="filter-color-style">
+          {
+            colors.map((curColor)=>{
+              if(curColor==="All"){
+              return <button
+              type="button"
+              className="color-all--style"
+              name="colors"
+              style={{
+                backgroundColor:curColor
+              }}
+              value={curColor}
+              onClick={filterValue}
+              >All
+              </button>
+              }
+              else{
+                return <button
+                type="button"
+                className={(curColor!==color)?'btnStyle':'btnStyle active'}
+                name="colors"
+                style={{
+                  backgroundColor:curColor
+                }}
+                value={curColor}
+                onClick={filterValue}
+              >
+              {(curColor===color)?<FaCheck className='checkStyle'/>:null}
+              </button>
+              }
+            })
+          }
+        </div>
+      </div>
+      <div className="filter-price">
+        <h3>Price</h3>
+        <p>
+          <FormatPrice price={price/100} />
+        </p>
+        <input 
+        type="range" 
+        id="price" 
+        value={price} 
+        name="price"
+        max={maxPrice} 
+        min={minPrice}
+        onChange={filterValue}></input>
+      </div>
+      <div className="filter-clear">
+        <Button className='btn' onClick={clearFilter}>Clear Filter</Button>
       </div>
     </Wrapper>
   )
@@ -90,7 +199,7 @@ const Wrapper = styled.section`
     font-size: 1rem;
     color: #fff;
   }
-  .filter_price {
+  .filter-price {
     input {
       margin: 0.5rem 0 1rem 0;
       padding: 0;
@@ -108,5 +217,6 @@ const Wrapper = styled.section`
     color: #000;
   }
 `;
+
 
 export default FilterSection

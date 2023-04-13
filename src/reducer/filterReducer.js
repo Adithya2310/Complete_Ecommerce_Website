@@ -1,12 +1,21 @@
 
 const filterReducer = (state,action) => {
     switch(action.type){
-        case "ALL_PRODUCTS" : 
+        case "ALL_PRODUCTS" :
+            // to get the maximum price 
+        const priceArray=action.payload.map((curElem)=>curElem.price);
+        const maxPrice=Math.max(...priceArray);
+        // console.log("now",maxPrice);
             // console.log("action payload inside a reducer=>",action.payload); 
             return {
             ...state,
             filtered_products:[...action.payload],
-            all_products:[...action.payload]
+            all_products:[...action.payload],
+            filter:{
+                ...state.filter,
+                price:maxPrice,
+                maxPrice:maxPrice
+            }
         }
         case "SET_GRID_VIEW": return {
             ...state,
@@ -87,17 +96,49 @@ const filterReducer = (state,action) => {
         case "FILTER_SECTION":{
             let tempData=state.all_products;
             let initialData=state.all_products;
-            const text=state.filter.text;
+            const {text,category,company,colors,price}=state.filter;
+
             if(text){
                 tempData=initialData.filter((curElem)=>{
                     return curElem.name.toLowerCase().includes(text);
+                });
+            }
+            if(category!=="All"){
+                tempData=initialData.filter((curElem)=>{
+                    return curElem.category===category
                 })
+            }
+            if(company!=="All"){
+
+                tempData=initialData.filter((curElem)=>{
+                    return curElem.company===company
+                })
+            }
+            if(colors!=="All"){
+                tempData=initialData.filter((curElem)=>{
+                    return curElem.colors.includes(colors)
+                })
+            }
+            if(price){
+                tempData=tempData.filter((curElem)=>curElem.price<=price)
             }
             return {
                 ...state,
                 filtered_products:tempData
             }
         }
+        case "CLEAR_FILTER":
+            const defaultFilterState=action.payload;
+            // defaultFilterState.price=state.filter.maxPrice;
+            // defaultFilterState.maxPrice=state.filter.maxPrice
+            return {
+                ...state,
+                filter:{
+                    ...defaultFilterState,
+                    price:state.filter.maxPrice,
+                    maxPrice:state.filter.maxPrice
+                }
+            }
 
         default: return state
     }
