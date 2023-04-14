@@ -63,7 +63,7 @@ const FilterSection = () => {
           <select name="company" id="company" className='filter-company--select' onClick={filterValue}>
             {
               company.map((curCompany,index)=>{
-                return <option value={curCompany} key={index}>{curCompany}</option> 
+                return <option name="company" value={curCompany} key={index}>{curCompany}</option> 
               })
             }
           </select>

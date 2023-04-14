@@ -4,13 +4,18 @@ import {FaCheck} from "react-icons/fa";
 import CartAmountToggle from "./CartAmountToggle";
 import { NavLink } from "react-router-dom";
 import {Button} from "../styles/Button";
+import { useCartContext } from "../context/CartContext";
 
 
 const AddtoCart = ({product={"colors":0}}) => {
     const [selected,setSelected]=useState(0);
     const [amount,setAmount]=useState(1);
+
+    // to access the methods of the cart context
+    const {addToCart}=useCartContext();
+
     console.log(product);
-    const {colors,stock}=product;
+    const {id,colors,stock}=product;
     console.log(colors);
     
     // to incresement and decrement operation
@@ -39,7 +44,7 @@ const AddtoCart = ({product={"colors":0}}) => {
         {/* to select the number of items you wanna purchase */}
         <CartAmountToggle amount={amount} decrese={setDecrese} increse={setIncrese}/>
         <NavLink to="/cart">
-        <Button>
+        <Button onClick={()=>{addToCart(colors[selected],id,amount,product)}}>
             Add To Cart
         </Button>
         </NavLink>

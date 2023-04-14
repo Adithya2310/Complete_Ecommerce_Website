@@ -104,18 +104,18 @@ const filterReducer = (state,action) => {
                 });
             }
             if(category!=="All"){
-                tempData=initialData.filter((curElem)=>{
+                tempData=tempData.filter((curElem)=>{
                     return curElem.category===category
                 })
             }
             if(company!=="All"){
 
-                tempData=initialData.filter((curElem)=>{
+                tempData=tempData.filter((curElem)=>{
                     return curElem.company===company
                 })
             }
             if(colors!=="All"){
-                tempData=initialData.filter((curElem)=>{
+                tempData=tempData.filter((curElem)=>{
                     return curElem.colors.includes(colors)
                 })
             }

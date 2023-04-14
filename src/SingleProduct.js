@@ -55,7 +55,7 @@ const SingleProduct= () => {
             MRP:
           </p>
           <p className="product-data-price add-margin">
-            <span><del><FormatPrice price={price/100+2500}/></del></span>
+            <span><del><FormatPrice price={price/10+2500}/></del></span>
           </p>
           </div>
           <div style={{display:"flex"}}>
@@ -63,7 +63,7 @@ const SingleProduct= () => {
             Deal of the Day: 
           </p>
           <p className="product-data-price product-data-real-price add-margin">
-             <FormatPrice price={price/100}/> 
+             <FormatPrice price={price/10}/> 
           </p>
           </div>
           <p>{description}</p>
