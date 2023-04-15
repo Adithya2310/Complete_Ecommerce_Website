@@ -17,7 +17,7 @@ const ListView = ({products}) => {
                         </figure>
                         <div className="card-data">
                             <h3>{name}</h3>
-                            <p><FormatPrice price={price}/></p>
+                            <p><FormatPrice price={price/100}/></p>
                             <p>{description.slice(0,99)}...</p>
                             <NavLink to={`/SingleProduct/${id}`} className="btn-main">
                                 <Button className='btn'>Read more</Button>

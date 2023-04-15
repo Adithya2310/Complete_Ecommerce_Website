@@ -3,11 +3,12 @@ import { useCartContext } from "./context/CartContext";
 import CartItem from "./components/CartItem";
 import { NavLink } from "react-router-dom";
 import {Button } from "./styles/Button";
+import FormatPrice from "./Helper/FormatPrice";
 
 const Cart = () => {
 
   // to get the items in the cart
-  const {cart,removeCartProduct,clearCart}=useCartContext();
+  const {cart,removeCartProduct,clearCart,setIncrese,setDecrese,total_value,shipping_fees}=useCartContext();
   // console.log("now",cart);
 
   if(cart.length===0){
@@ -34,7 +35,7 @@ const Cart = () => {
       <div className="cart-item">
         {
           cart.map((curElem)=>{
-            return <CartItem id={curElem.id} {...curElem} removeCartProduct={removeCartProduct} />
+            return <CartItem id={curElem.id} {...curElem} removeCartProduct={removeCartProduct} setIncrese={setIncrese} setDecrese={setDecrese}/>
           })
         }
       </div>
@@ -49,6 +50,24 @@ const Cart = () => {
           Clear Cart
         </Button>
       </div>
+      {/* To get the total order amount */}
+      <div className="order-total--amount">
+      <div className="order-total--subdata">
+        <div>
+          <p>Subtotal:</p>
+          <p><FormatPrice price={total_value/100}/></p>
+        </div>
+        <div>
+          <p>Shipping fee:</p>
+          <p><FormatPrice price={shipping_fees/100}/></p>
+        </div>
+        <hr />
+        <div>
+          <p>Order Total:</p>
+          <p><FormatPrice price={(total_value+shipping_fees)/100}/></p>
+        </div>
+      </div>
+    </div>
     </div>
   </Wrapper>;
 };
@@ -171,6 +190,8 @@ const Wrapper = styled.section`
     flex-direction: column;
     justify-content: flex-end;
     align-items: flex-end;
+    
+    
 
     .order-total--subdata {
       border: 0.1rem solid #f0f0f0;
@@ -178,6 +199,8 @@ const Wrapper = styled.section`
       flex-direction: column;
       gap: 1.8rem;
       padding: 3.2rem;
+      background-color: #fff9e3!important;
+
     }
     div {
       display: flex;
@@ -186,7 +209,7 @@ const Wrapper = styled.section`
     }
 
     div:last-child {
-      background-color: #fafafa;
+      background-color: #fff9e3;
     }
 
     div p:last-child {

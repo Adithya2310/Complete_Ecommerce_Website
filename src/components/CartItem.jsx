@@ -3,14 +3,9 @@ import CartAmountToggle from './CartAmountToggle'
 import FormatPrice from '../Helper/FormatPrice'
 import {FaTrash} from "react-icons/fa"
 
-const CartItem = ({id,image,name,color,price,amount,removeCartProduct}) => {
+const CartItem = ({id,image,name,color,price,amount,removeCartProduct,setIncrese,setDecrese}) => {
 
-    function setIncrese(){
-        // amount<stock&&setAmount(amount+1);
-    }
-    function setDecrese(){
-        // amount>1&&setAmount(amount-1);
-    }
+
   return (
     <div className="cart_heading grid grid-five-column">
     {/* item section */}
@@ -30,7 +25,10 @@ const CartItem = ({id,image,name,color,price,amount,removeCartProduct}) => {
         {/* price section */}
         <div className="cart-hide"><p><FormatPrice price={price/100}/></p></div>
         {/* quantity section */}
-        <CartAmountToggle amount={amount} decrese={setDecrese} increse={setIncrese}/>
+        <CartAmountToggle 
+        amount={amount} 
+        decrese={()=>{setDecrese(id)}} 
+        increse={()=>{setIncrese(id)}}/>
         {/* subtotal section */}
         <div className="cart-hide"><p><FormatPrice price={price*amount/100}/></p></div>
         {/* remove section */}
