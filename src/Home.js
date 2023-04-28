@@ -5,7 +5,7 @@ import FeaturedProduct from './components/FeaturedProduct';
 
 const Home = () => {
   const data={
-    name:"Adithya Store"
+    name:"Deer Store"
   };
   return (<>
         <HeroSection data={data} />

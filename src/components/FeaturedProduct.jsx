@@ -34,6 +34,9 @@ const Wrapper = styled.section`
   background-color: ${({ theme }) => theme.colors.bg};
   .container {
     max-width: 120rem;
+    .intro-data{
+      color:rgb(33, 85, 205);
+    }
   }
   figure {
     width: auto;

@@ -122,7 +122,7 @@ const Nav = styled.nav`
       place-items: center;
       top: -20%;
       left: 70%;
-      background-color: ${({ theme }) => theme.colors.helper};
+      background-color: rgb(33, 85, 205, 0.9);
     }
   }
   .user-login--name {

@@ -9,9 +9,9 @@ const HeroSection = ({ data }) => {
         <div className='container'>
             <div className='grid grid-two-column'>
                 <div className='hero-section-data'>
-                    <p className='intro-data'>Welcome to</p>
+                    <p style={{color:"#2155CD"}} className='intro-data'>Welcome to</p>
                     <h1>{ data.name }</h1>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Posuere lorem ipsum dolor sit. Neque egestas congue quisque egestas diam in arcu. Odio pellentesque diam volutpat commodo sed egestas. Quisque egestas diam in arcu cursus euismod quis viverra</p>
+                    <p>Welcome to Deer Store! We offer the latest in high-quality electronics and gadgets. From smartphones and laptops to amazing watches, we've got you covered. We always guarantee fast and reliable delivery. Shop now and experience the ultimate in electronic goods</p>
                     <NavLink to="/products">
                         <Button>Shop Now</Button>
                     </NavLink>
@@ -43,6 +43,7 @@ const Wrapper = styled.section`
       font-weight: bold;
     }
     .intro-data {
+      color:${({ theme }) => theme.colors.helper}
       margin-bottom: 0;
     }
   }
@@ -59,7 +60,7 @@ const Wrapper = styled.section`
       content: "";
       width: 60%;
       height: 80%;
-      background-color: rgba(81, 56, 238, 0.4);
+      background-color: rgb(33, 85, 205, 0.4);
       position: absolute;
       left: 50%;
       top: -5rem;

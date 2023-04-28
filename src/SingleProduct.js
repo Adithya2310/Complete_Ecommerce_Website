@@ -25,7 +25,7 @@ const SingleProduct= () => {
 
   useEffect(()=>{
     getSingleProduct(`${API}?id=${id}`);
-  },[]);
+  },[]); // eslint-disable-line react-hooks/exhaustive-deps
   
   const {
     name,company,price,

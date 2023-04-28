@@ -25,13 +25,13 @@ const Footer = () => {
                 <div className="container grid grid-four-column">
                     <div className="footer-about">
                         <h3>Adithya N G</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sit amet cursus sit amet dictum sit amet justo.</p>
+                        <p>We are committed to providing our customers with exceptional service, competitive prices, and a hassle-free shopping experience.</p>
                     </div>
                     <div className="footer-subscribe">
                         <h3>Subscribe to get more updates</h3>
                         <form action="#">
                             <input type="email" name="email" placeholder='Email' />
-                            <input type="submit" value="Subscribe" />
+                            <input type="submit" style={{backgroundColor:"rgb(33, 85, 205)"}} value="Subscribe" />
                         </form>
                     </div>
                     <div className="footer-socials">
