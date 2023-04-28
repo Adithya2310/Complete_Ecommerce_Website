@@ -1,5 +1,4 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
 import {FaPlus,FaMinus} from "react-icons/fa";
 
 const CartAmountToggle = ({amount,decrese,increse}) => {

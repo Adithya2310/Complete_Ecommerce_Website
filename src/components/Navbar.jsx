@@ -4,17 +4,74 @@ import styled from 'styled-components';
 import { FiShoppingCart } from "react-icons/fi";
 import { CgMenu,CgClose } from "react-icons/cg";
 import { useCartContext } from '../context/CartContext';
+import { useAuth0 } from "@auth0/auth0-react";
+import { Button } from '../styles/Button';
 
 const Navbar = () => {
+
+  const { loginWithRedirect,isAuthenticated,logout,user }=useAuth0();
 
   const [menu,setMenu]=useState(false);
 
   const {total_items}=useCartContext();
 
-  const Nav = styled.nav`
+
+  return (
+    <Nav>
+        <div className={menu?'navabar active':'navbar'}>
+            <ul className='navbar-lists'>
+                <li>
+                    <NavLink to="/" className="navbar-link" onClick={()=>setMenu(false)}>
+                        Home
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink to="/about" className="navbar-link" onClick={()=>setMenu(false)}>
+                        About
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink to="/products" className="navbar-link" onClick={()=>setMenu(false)}>
+                        Products
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink to="/contact" className="navbar-link" onClick={()=>setMenu(false)}>
+                        Contact
+                    </NavLink>
+                </li>
+                {isAuthenticated&&<p className='user-name'>{user.name}</p>}
+                <li>
+                {isAuthenticated?
+                <Button onClick={()=>logout({
+                        returnTo: window.location.origin,
+                      })}>Log out</Button>:
+                <Button onClick={()=>loginWithRedirect()}>Log In</Button>
+                }
+                </li>
+                <li>
+                    <NavLink to="/cart" className="navbar-link cart-trolley--link" onClick={()=>setMenu(false)}>
+                    <div>
+                    <FiShoppingCart className="cart-trolley"/>
+                        <span className="cart-total--item">{total_items}</span>
+                    </div>
+                    </NavLink>
+                </li>
+            </ul>
+            <div className="mobile-navbar-btn">
+              <CgMenu name="menu-outline" className="mobile-nav-icon" onClick={()=>setMenu(true)}/>
+              <CgClose name="close-outline" className="mobile-nav-icon close-outline" onClick={()=>setMenu(false)}/>
+            </div>
+        </div>
+        {/* two buttons for menu in mobile */}
+    </Nav>
+  )
+}
+
+const Nav = styled.nav`
   .navbar-lists {
     display: flex;
-    gap: 4.8rem;
+    gap: 4.5rem;
     align-items: center;
     .navbar-link {
       &:link,
@@ -32,6 +89,9 @@ const Navbar = () => {
         color: ${({ theme }) => theme.colors.helper};
       }
     }
+    .user-name{
+        cursor: pointer;
+      }
   }
   .mobile-navbar-btn {
     display: none;
@@ -142,49 +202,5 @@ const Navbar = () => {
     }
   }
 `;
-
-
-  return (
-    <Nav>
-        <div className={menu?'navabar active':'navbar'}>
-            <ul className='navbar-lists'>
-                <li>
-                    <NavLink to="/" className="navbar-link" onClick={()=>setMenu(false)}>
-                        Home
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink to="/about" className="navbar-link" onClick={()=>setMenu(false)}>
-                        About
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink to="/products" className="navbar-link" onClick={()=>setMenu(false)}>
-                        Products
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink to="/contact" className="navbar-link" onClick={()=>setMenu(false)}>
-                        Contact
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink to="/cart" className="navbar-link cart-trolley--link" onClick={()=>setMenu(false)}>
-                    <div>
-                    <FiShoppingCart className="cart-trolley"/>
-                        <span className="cart-total--item">{total_items}</span>
-                    </div>
-                    </NavLink>
-                </li>
-            </ul>
-            <div className="mobile-navbar-btn">
-              <CgMenu name="menu-outline" className="mobile-nav-icon" onClick={()=>setMenu(true)}/>
-              <CgClose name="close-outline" className="mobile-nav-icon close-outline" onClick={()=>setMenu(false)}/>
-            </div>
-        </div>
-        {/* two buttons for menu in mobile */}
-    </Nav>
-  )
-}
 
 export default Navbar

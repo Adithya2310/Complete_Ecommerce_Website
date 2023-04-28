@@ -6,13 +6,15 @@ const CartContext=createContext();
 
 const getLocalCartData=()=>{
     const localData=localStorage.getItem("cartData");
-    if(localData===[]){
+    if(localData===null){
         return []
     }
     else{
         return JSON.parse(localData);
     }
 }
+
+console.log("now",getLocalCartData());
 
 
 const initialState={

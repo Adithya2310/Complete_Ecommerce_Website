@@ -6,17 +6,28 @@ import reportWebVitals from "./reportWebVitals";
 import { AppProvider } from "./context/ProductContext";
 import { FilterProvider } from "./context/FilterContext";
 import { CartProvider } from "./context/CartContext";
-
+import { Auth0Provider } from "@auth0/auth0-react";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
-root.render(<AppProvider>
-    <FilterProvider>
-        <CartProvider>
-            <App />
-        </CartProvider>
-    </FilterProvider>
-</AppProvider>);
+const domain=process.env.REACT_APP_DOMAIN;
+const clientId=process.env.REACT_APP_CLIENT_ID;
+console.log("env variables",domain,clientId)
+
+root.render(
+<Auth0Provider
+    domain={domain}
+    clientId={clientId}
+    redirectUri={window.location.origin}
+>
+    <AppProvider>
+        <FilterProvider>
+            <CartProvider>
+                <App />
+            </CartProvider>
+        </FilterProvider>
+    </AppProvider>
+</Auth0Provider>);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
